@@ -1,0 +1,21 @@
+{
+  "name": "web3",
+  "version": "1.0.0",
+  "description": "multichain web3 library interfaces",
+  "main": "index.ts",
+  "scripts": {
+    "start": "npm start",
+    "test": "ts-node test",
+    "build": "tsc src/index"
+  },
+  "author": "@coinx99 - coinx.trade",
+  "license": "ISC",
+  "dependencies": {
+    "@solana/web3.js": "^1.78.5",
+    "ethers": "^6.7.1",
+    "near-api-js": "^2.1.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
