@@ -6,5 +6,5 @@ const { log, warn, error } = console
 log(typeof CHAINS)
 
 
-var w = connectChain("0x1", CHAINS[1].blockExplorerUrls)
-// log(w)
+var w = connectChain("0x1")
+log(w)

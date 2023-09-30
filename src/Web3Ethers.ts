@@ -6,7 +6,7 @@
  * - Khởi tạo thực thể Contract
  */
 
-import Std from "./Std.js"
+import Std, { log } from "./Std.js"
 import { Provider, WebSocketProvider, JsonRpcProvider, } from "ethers";
 import Web3, { Wallet } from "./Web3.js";
 
@@ -21,7 +21,7 @@ class Web3Ethers implements Web3 {
             url = rpcUrls
         else
             url = rpcUrls[0];
-
+        log(typeof (rpcUrls))
         if (Std.isUrl(url)) {
             if (url.startsWith("ws")) {
                 this.provider = new WebSocketProvider(url);
