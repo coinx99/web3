@@ -1,7 +1,10 @@
-import { connectChain } from "./src/Web3.js";
+import CHAINS from "./src/CHAINS.json";
+import { connectChain } from "./src/Web3";
 
 const { log, warn, error } = console
 
+log(typeof CHAINS)
 
-var w = connectChain("1", CHAINS["1"])
-log(w)
+
+var w = connectChain("0x1", CHAINS[1].blockExplorerUrls)
+// log(w)

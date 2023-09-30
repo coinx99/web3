@@ -5,13 +5,15 @@
  * - chuyển tiền từ ví này sang ví kia
  * - Khởi tạo thực thể Contract
  */
+const { log, warn, error } = console
 
 import CHAINS from "./CHAINS.json";
+import Web3Ethers from "./Web3Ethers";
 
 /**
  * Mạng này mainnet hay testnet
  */
-export type Net = "TEST" | "MAINNET"
+export type Net = "TEST" | "MAIN"
 
 export interface Wallet {
     address: string,
@@ -49,17 +51,21 @@ abstract class Web3 {
  * @param chainId 
  * @param rpcUrls 
  */
-export function connectChain(chainId: any, rpcUrls?: [string]) {
-    if(CHAINS[chainId as keyof CHAINS]){
-        rpcUrls = CHAINS[chainId].blockExplorerUrls[0];
+export function connectChain(chainId = "0x1", rpcUrls?: string | string[]) {
+    if (!rpcUrls) {
+        let chain = CHAINS.find((v, i) => v.chainId === chainId)
+        if (chain) {
+            rpcUrls = chain.blockExplorerUrls[0];
+        }
     }
-    switch ( chainId) {
-        case "0x1":
+
+    switch (chainId) {
+        case "tron":
 
             break;
 
         default:
-            break;
+            return new Web3Ethers(rpcUrls)
     }
 }
 

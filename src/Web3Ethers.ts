@@ -5,14 +5,32 @@
  * - chuyển tiền từ ví này sang ví kia
  * - Khởi tạo thực thể Contract
  */
-import {ethers} from "ethers";
 
+import Std from "./Std.js"
+import { Provider, WebSocketProvider, JsonRpcProvider, } from "ethers";
 import Web3, { Wallet } from "./Web3.js";
 
 class Web3Ethers implements Web3 {
 
-    constructor(rpc: string) {
+    provider: Provider;
 
+
+    constructor(rpcUrls: string | string[]) {
+        let url;
+        if (typeof (rpcUrls) === "string")
+            url = rpcUrls
+        else
+            url = rpcUrls[0];
+
+        if (Std.isUrl(url)) {
+            if (url.startsWith("ws")) {
+                this.provider = new WebSocketProvider(url);
+            } else {
+                this.provider = new JsonRpcProvider(url);
+            }
+        } else {
+            throw new Error("NOT_URL");
+        }
     }
 
     static isAddress(address = "") { }
