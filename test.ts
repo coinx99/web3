@@ -1,7 +1,7 @@
-import { Web3Ethers } from "./src/index.js";
+import { connectChain } from "./src/Web3.js";
 
 const { log, warn, error } = console
 
 
-var w = new Web3Ethers("");
+var w = connectChain("1", CHAINS["1"])
 log(w)

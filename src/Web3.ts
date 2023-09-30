@@ -49,7 +49,10 @@ abstract class Web3 {
  * @param chainId 
  * @param rpcUrls 
  */
-export function connectChain(chainId: string, rpcUrls?: [string]) {
+export function connectChain(chainId: any, rpcUrls?: [string]) {
+    if(CHAINS[chainId as keyof CHAINS]){
+        rpcUrls = CHAINS[chainId].blockExplorerUrls[0];
+    }
     switch ( chainId) {
         case "0x1":
 
