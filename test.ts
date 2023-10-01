@@ -10,6 +10,6 @@ log(chain)
 
 chain?.getBalance("0x122348D81f32D0e13ee023B07d400Fd6CF81a6bF").then(balance => {
 
-    log(balance / BigInt(1e18))
+    log(Number(balance) / 1e18)
 
 })

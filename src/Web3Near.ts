@@ -1,11 +1,11 @@
 
 import Std, { log } from "./Std"
-import { Provider, WebSocketProvider, JsonRpcProvider, getAddress, ethers } from "ethers";
+import { connect, Near, keyStores, } from "near-api-js";
 import Web3, { Wallet } from "./Web3.js";
 
-class Web3Ethers implements Web3 {
+class Web3Near implements Web3 {
 
-    provider: Provider;
+    provider: Near;
 
     constructor(rpcUrls: string | string[]) {
         let url;
@@ -16,11 +16,15 @@ class Web3Ethers implements Web3 {
         log(url, typeof url)
 
         if (Std.isUrl(url)) {
-            if (url.startsWith("ws")) {
-                this.provider = new WebSocketProvider(url);
-            } else {
-                this.provider = new JsonRpcProvider(url);
-            }
+            const connectionConfig = {
+                networkId: "testnet",
+                keyStore: new keyStores.BrowserLocalStorageKeyStore(), // first create a key store 
+                nodeUrl: "https://rpc.testnet.near.org",
+                walletUrl: "https://wallet.testnet.near.org",
+                helperUrl: "https://helper.testnet.near.org",
+                explorerUrl: "https://explorer.testnet.near.org",
+            };
+            connect(connectionConfig).then(near => this.provider = near);
         } else {
             throw new Error("NOT_URL");
         }
@@ -51,4 +55,4 @@ class Web3Ethers implements Web3 {
 
 
 
-export default Web3Ethers;
+export default Web3Near;
