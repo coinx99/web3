@@ -6,14 +6,13 @@
  * - Khởi tạo thực thể Contract
  */
 
-import Std, { log } from "./Std.js"
-import { Provider, WebSocketProvider, JsonRpcProvider, } from "ethers";
+import Std, { log } from "./Std"
+import { Provider, WebSocketProvider, JsonRpcProvider, getAddress, ethers } from "ethers";
 import Web3, { Wallet } from "./Web3.js";
 
 class Web3Ethers implements Web3 {
 
     provider: Provider;
-
 
     constructor(rpcUrls: string | string[]) {
         let url;
@@ -21,7 +20,8 @@ class Web3Ethers implements Web3 {
             url = rpcUrls
         else
             url = rpcUrls[0];
-        log(typeof (rpcUrls))
+        log(url, typeof url)
+
         if (Std.isUrl(url)) {
             if (url.startsWith("ws")) {
                 this.provider = new WebSocketProvider(url);
@@ -33,9 +33,22 @@ class Web3Ethers implements Web3 {
         }
     }
 
-    static isAddress(address = "") { }
+    /**
+     * @param address address string
+     */
+    static isAddress(address: string): boolean {
+        try {
+            getAddress(address)
+            return true;
+        } catch (err) {
+            return false
+        }
+    }
 
-    getBalance() { }
+
+    getBalance(address = ethers.ZeroAddress): Promise<BigInt> {
+        return this.provider.getBalance(address);
+    }
 
     send(walletFrom: Wallet, walletTo: Wallet, amount: BigInt) { }
 }

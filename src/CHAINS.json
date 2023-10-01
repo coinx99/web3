@@ -65,6 +65,7 @@
             "https://etherscan.io/images/svg/brands/ethereum-original-light.svg"
         ],
         "rpcUrls": [
+            "https://eth.drpc.org",
             "wss://mainnet.infura.io/v3/d41e02ee7f344eb6ba4b9239f853de51"
         ],
         "chainName": "Ethereum",

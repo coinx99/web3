@@ -5,20 +5,11 @@ const { log, warn, error } = console
 
 let chains = _chains as unknown as CHAINS;
 
-log(chains["1337"])
+var chain = connectChain("ethers", chains["5"].rpcUrls)
+log(chain)
 
-// for (const key in CHAINS) {
-//     log(typeof CHAINS[key].chainId)
-// }
+chain?.getBalance("0x122348D81f32D0e13ee023B07d400Fd6CF81a6bF").then(balance => {
 
-// log(CHAINS["1"])
-// type chains = Record<string | number | symbol, CHAIN> = {
-//     [key in keyof typeof CHAINS]: CHAIN & {
-//         chainId?: key extends `${number}` ? Number : undefined;
-//         name: key extends `chain${infer name}` ? (typeof name)[][Number] : never;
-//     }
-// }
+    log(balance / BigInt(1e18))
 
-
-// var w = connectChain("1")
-// log(w)
+})

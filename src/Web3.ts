@@ -39,9 +39,9 @@ class Web3 {
 
     constructor(rpc: string) { }
 
-    static isAddress(address = "") { }
+    static isAddress: (address: string) => {}
 
-    getBalance() { }
+    getBalance(address: string) { }
 
     send(walletFrom: Wallet, walletTo: Wallet, amount: BigInt) { }
 }
@@ -51,21 +51,22 @@ class Web3 {
  * @param chainId 
  * @param rpcUrls 
  */
-export function connectChain(chainId: string | symbol = "1", rpcUrls?: string | string[]) {
-    if (!rpcUrls) {
-        let chain = CHAINS[chainId] //.find((v, i) => v.chainId === chainId)
-        if (chain) {
-            rpcUrls = chain.blockExplorerUrls[0];
-        }
-    }
-
-    switch (chainId) {
+export function connectChain(evm: "ethers" | "tron" | "near" | "solana", rpcUrls?: string | string[]) {
+    switch (evm) {
         case "tron":
 
             break;
 
+        case "near":
+
+            break;
+
+        case "solana":
+
+            break;
+
         default:
-            // return new Web3Ethers(rpcUrls)
+            return new Web3Ethers(rpcUrls)
             break;
     }
 }

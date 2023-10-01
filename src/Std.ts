@@ -10,7 +10,7 @@ class Std {
             return false;
         }
     }
-
 }
 
 export default Std;
+
