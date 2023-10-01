@@ -5,10 +5,8 @@
  * - chuyển tiền từ ví này sang ví kia
  * - Khởi tạo thực thể Contract
  */
-const { log, warn, error } = console
-
-import CHAINS from "./CHAINS.json";
 import Web3Ethers from "./Web3Ethers";
+const { log, warn, error } = console
 
 /**
  * Mạng này mainnet hay testnet
@@ -20,22 +18,24 @@ export interface Wallet {
     privateKey: string,
 }
 
-interface CHAIN {
+export interface CHAIN {
     chainId: string, // hex of id
     chainName: string,
     nativeCurrency: {
         name: string, decimals: Number, symbol: string
     },
-    rpcUrls: [string],
-    blockExplorerUrls: [string],
-    iconUrls: [string], // url to icon
-    dev: Net
+    icon: string | string[], // url to icon
+    rpcUrls: string[],
+    blockExplorerUrls: string[],
+    dev?: Net
 }
+
+export type CHAINS = Record<symbol | string, CHAIN>;
 
 /**
  * Mẫu giao diện Web3 với các hàm mà các kế thừa khác phải có
  */
-abstract class Web3 {
+class Web3 {
 
     constructor(rpc: string) { }
 
@@ -51,9 +51,9 @@ abstract class Web3 {
  * @param chainId 
  * @param rpcUrls 
  */
-export function connectChain(chainId = "0x1", rpcUrls?: string | string[]) {
+export function connectChain(chainId: string | symbol = "1", rpcUrls?: string | string[]) {
     if (!rpcUrls) {
-        let chain = CHAINS.find((v, i) => v.chainId === chainId)
+        let chain = CHAINS[chainId] //.find((v, i) => v.chainId === chainId)
         if (chain) {
             rpcUrls = chain.blockExplorerUrls[0];
         }
@@ -65,7 +65,8 @@ export function connectChain(chainId = "0x1", rpcUrls?: string | string[]) {
             break;
 
         default:
-            return new Web3Ethers(rpcUrls)
+            // return new Web3Ethers(rpcUrls)
+            break;
     }
 }
 

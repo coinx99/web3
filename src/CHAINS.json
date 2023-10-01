@@ -1,12 +1,15 @@
-[
-    {
+{
+    "1337": {
         "nativeCurrency": {
             "name": "Ether test",
             "decimals": 18,
             "symbol": "ETH"
         },
         "chainId": "0x539",
-        "icon": "eth.svg",
+        "iconUrls": [
+            "eth.svg",
+            "https://etherscan.io/images/svg/brands/ethereum-original-light.svg"
+        ],
         "rpcUrls": [
             "HTTP://127.0.0.1:8545"
         ],
@@ -14,14 +17,17 @@
         "blockExplorerUrls": "http://localhost:8545/",
         "net": "TEST"
     },
-    {
+    "31337": {
         "nativeCurrency": {
             "name": "Ether test",
             "decimals": 18,
             "symbol": "ETH"
         },
         "chainId": "0x7a69",
-        "icon": "eth.svg",
+        "iconUrls": [
+            "eth.svg",
+            "https://etherscan.io/images/svg/brands/ethereum-original-light.svg"
+        ],
         "rpcUrls": [
             "http://127.0.0.1:8545/"
         ],
@@ -29,14 +35,17 @@
         "blockExplorerUrls": "http://127.0.0.1:8545/",
         "net": "TEST"
     },
-    {
+    "5777": {
         "nativeCurrency": {
             "name": "Ether test",
             "decimals": 18,
             "symbol": "ETH"
         },
         "chainId": "0x1691",
-        "icon": "eth.svg",
+        "iconUrls": [
+            "eth.svg",
+            "https://etherscan.io/images/svg/brands/ethereum-original-light.svg"
+        ],
         "rpcUrls": [
             "HTTP://127.0.0.1:7545"
         ],
@@ -44,14 +53,17 @@
         "blockExplorerUrls": "http://localhost:8545/",
         "net": "TEST"
     },
-    {
+    "1": {
         "nativeCurrency": {
             "name": "Ethereum",
             "decimals": 18,
             "symbol": "ETH"
         },
         "chainId": "0x1",
-        "icon": "eth.svg",
+        "iconUrls": [
+            "eth.svg",
+            "https://etherscan.io/images/svg/brands/ethereum-original-light.svg"
+        ],
         "rpcUrls": [
             "wss://mainnet.infura.io/v3/d41e02ee7f344eb6ba4b9239f853de51"
         ],
@@ -61,14 +73,17 @@
         ],
         "net": "MAIN"
     },
-    {
+    "5": {
         "nativeCurrency": {
             "name": "Ethereum",
             "decimals": 18,
             "symbol": "ETH"
         },
         "chainId": "0x5",
-        "icon": "eth.svg",
+        "iconUrls": [
+            "eth.svg",
+            "https://etherscan.io/images/svg/brands/ethereum-original-light.svg"
+        ],
         "rpcUrls": [
             "https://goerli.infura.io/v3/d41e02ee7f344eb6ba4b9239f853de51"
         ],
@@ -78,13 +93,16 @@
         ],
         "net": "TEST"
     },
-    {
+    "97": {
         "nativeCurrency": {
             "name": "tBNB",
             "decimals": 18,
             "symbol": "tBNB"
         },
-        "icon": "bnb.svg",
+        "iconUrls": [
+            "bnb.svg",
+            "https://testnet.bscscan.com/images/svg/brands/bnb.svg"
+        ],
         "chainId": "0x61",
         "rpcUrls": [
             "https://data-seed-prebsc-1-s1.binance.org:8545"
@@ -93,17 +111,19 @@
         "blockExplorerUrls": [
             "https://testnet.bscscan.com/"
         ],
-        "iconUrls": "https://testnet.bscscan.com/images/svg/brands/bnb.svg",
         "net": "TEST"
     },
-    {
+    "56": {
         "nativeCurrency": {
             "name": "BNB",
             "decimals": 18,
             "symbol": "BNB"
         },
         "chainId": "0x38",
-        "icon": "bnb.svg",
+        "iconUrls": [
+            "bnb.svg",
+            "https://bscscan.com/images/svg/brands/bnb.svg"
+        ],
         "rpcUrls": [
             "https://bsc-dataseed1.binance.org"
         ],
@@ -111,17 +131,19 @@
         "blockExplorerUrls": [
             "https://bscscan.com/"
         ],
-        "iconUrls": "https://bscscan.com/images/svg/brands/bnb.svg",
         "net": "MAIN"
     },
-    {
+    "137": {
         "nativeCurrency": {
             "name": "Polygon",
             "decimals": 18,
             "symbol": "MATIC"
         },
         "chainId": "0x89",
-        "icon": "bnb.svg",
+        "iconUrls": [
+            "bnb.svg",
+            "https://bscscan.com/images/svg/brands/bnb.svg"
+        ],
         "rpcUrls": [
             "https://polygonscan.com"
         ],
@@ -129,10 +151,9 @@
         "blockExplorerUrls": [
             "https://polygonscan.com/"
         ],
-        "iconUrls": "https://bscscan.com/images/svg/brands/bnb.svg",
         "net": "MAIN"
     },
-    {
+    "42161": {
         "nativeCurrency": {
             "name": "Arbitrum",
             "decimals": 18,
@@ -146,10 +167,12 @@
         "blockExplorerUrls": [
             "https://arbiscan.io/"
         ],
-        "iconUrls": "https://testnet.arbiscan.io/images/svg/brands/arbitrum.svg",
+        "iconUrls": [
+            "https://testnet.arbiscan.io/images/svg/brands/arbitrum.svg"
+        ],
         "net": "MAIN"
     },
-    {
+    "421613": {
         "nativeCurrency": {
             "name": "Arbitrum Test",
             "decimals": 18,
@@ -163,17 +186,22 @@
         "blockExplorerUrls": [
             "https://arbiscan.io/"
         ],
-        "iconUrls": "https://testnet.arbiscan.io/images/svg/brands/arbitrum.svg",
+        "iconUrls": [
+            "https://testnet.arbiscan.io/images/svg/brands/arbitrum.svg"
+        ],
         "net": "TEST"
     },
-    {
+    "tron": {
         "nativeCurrency": {
             "name": "Tron",
             "decimals": 18,
             "symbol": "TRX"
         },
         "chainId": "tron",
-        "icon": "tron.svg",
+        "iconUrls": [
+            "tron.svg",
+            "https://static.tronscan.org/production/logo/trx.png"
+        ],
         "rpcUrls": [
             "https://api.trongrid.io"
         ],
@@ -181,15 +209,18 @@
         "blockExplorerUrls": [
             "https://tronscan.org/"
         ],
-        "iconUrls": "https://static.tronscan.org/production/logo/trx.png",
         "net": "MAIN"
     },
-    {
+    "80001": {
         "nativeCurrency": {
             "name": "MATIC",
             "decimals": 18,
             "symbol": "MATIC"
         },
+        "iconUrls": [
+            "matic.svg",
+            "https://mumbai.polygonscan.com/images/svg/brands/polygon.svg"
+        ],
         "chainId": "0x13881",
         "rpcUrls": [
             "https://matic-mumbai.chainstacklabs.com"
@@ -200,12 +231,16 @@
         ],
         "net": "TEST"
     },
-    {
+    "43113": {
         "nativeCurrency": {
             "name": "AVAX",
             "decimals": 18,
             "symbol": "AVAX"
         },
+        "iconUrls": [
+            "avax.svg",
+            "https://cryptologos.cc/logos/avalanche-avax-logo.svg"
+        ],
         "chainId": "0xa869",
         "rpcUrls": [
             "https://api.avax-test.network/ext/bc/C/rpc"
@@ -216,12 +251,16 @@
         ],
         "net": "TEST"
     },
-    {
+    "43114": {
         "nativeCurrency": {
             "name": "AVAX",
             "decimals": 18,
             "symbol": "AVAX"
         },
+        "iconUrls": [
+            "avax.svg",
+            "https://cryptologos.cc/logos/avalanche-avax-logo.svg"
+        ],
         "chainId": "0xa86a",
         "rpcUrls": [
             "https://avalanche.public-rpc.com"
@@ -232,20 +271,24 @@
         ],
         "net": "MAIN"
     },
-    {
+    "59140": {
         "nativeCurrency": {
             "name": "linea goerli",
             "decimals": 18,
             "symbol": "ETH"
         },
+        "iconUrls": [
+            "eth.svg",
+            "https://etherscan.io/images/svg/brands/ethereum-original-light.svg"
+        ],
         "chainId": "0xe704",
         "rpcUrls": [
             "https://linea-goerli.infura.io/v3/7b758e41cdea45c1a32f547d039b66ed"
         ],
         "chainName": "linea goerli",
         "blockExplorerUrls": [
-            "https://snowtrace.io/"
+            "https://explorer.goerli.linea.build/"
         ],
         "net": "MAIN"
     }
-]
+}
