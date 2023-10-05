@@ -1,22 +1,27 @@
 
 import Std, { log } from "./Std"
-import { connect, Near, keyStores, } from "near-api-js";
-import Web3, { Wallet } from "./Web3.js";
+import { EventEmitter } from "events";
+import { connect, Near, keyStores, ConnectConfig, } from "near-api-js";
+import Web3, { Net, Wallet } from "./Web3";
 
 class Web3Near implements Web3 {
 
+    /**
+     * all events of class
+     * ("connected", provider)
+     */
+    events: EventEmitter
     provider: Near;
 
-    constructor(rpcUrls: string | string[]) {
-        let url;
-        if (typeof (rpcUrls) === "string")
-            url = rpcUrls
-        else
-            url = rpcUrls[0];
-        log(url, typeof url)
+    name: string
+    decimals: BigInt
+    symbol: string
+    net?: Net
 
-        if (Std.isUrl(url)) {
-            const connectionConfig = {
+    constructor(config?: any | string) {
+        let connectionConfig: any;
+        if (!config) {
+            connectionConfig = {
                 networkId: "testnet",
                 keyStore: new keyStores.BrowserLocalStorageKeyStore(), // first create a key store 
                 nodeUrl: "https://rpc.testnet.near.org",
@@ -24,10 +29,22 @@ class Web3Near implements Web3 {
                 helperUrl: "https://helper.testnet.near.org",
                 explorerUrl: "https://explorer.testnet.near.org",
             };
-            connect(connectionConfig).then(near => this.provider = near);
-        } else {
-            throw new Error("NOT_URL");
+        } else if (typeof config === "string") {
+            connectionConfig = {
+                networkId: "testnet",
+                keyStore: new keyStores.BrowserLocalStorageKeyStore(), // first create a key store 
+                nodeUrl: config,
+                walletUrl: "https://wallet.testnet.near.org",
+                helperUrl: "https://helper.testnet.near.org",
+                explorerUrl: "https://explorer.testnet.near.org",
+            };
         }
+        connectionConfig = config;
+        this.events = new EventEmitter()
+        connect(connectionConfig).then(provider => {
+            this.provider = provider;
+            this.events.emit("connected", provider);
+        });
     }
 
     /**
@@ -35,7 +52,7 @@ class Web3Near implements Web3 {
      */
     static isAddress(address: string): boolean {
         try {
-            getAddress(address)
+            // getAddress(address)
             return true;
         } catch (err) {
             return false
@@ -46,8 +63,9 @@ class Web3Near implements Web3 {
      * lấy số dư của 1 địa chỉ ví 
      * @param address 
      */
-    getBalance(address = ethers.ZeroAddress): Promise<BigInt> {
-        return this.provider.getBalance(address);
+    async getBalance(address: string): Promise<BigInt> {
+        const account = await this.provider.account(address);
+        return BigInt((await account.getAccountBalance()).available);
     }
 
     send(walletFrom: Wallet, walletTo: Wallet, amount: BigInt) { }

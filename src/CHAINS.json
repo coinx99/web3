@@ -291,5 +291,41 @@
             "https://explorer.goerli.linea.build/"
         ],
         "net": "MAIN"
+    },
+    "neartest": {
+        "nativeCurrency": {
+            "name": "Near Test",
+            "decimals": 24,
+            "symbol": "Near"
+        },
+        "iconUrls": [
+            "near.svg"
+        ],
+        "chainName": "near testnet",
+
+        "net": "TEST",
+        "networkId": "testnet",
+        "nodeUrl": "https://rpc.testnet.near.org",
+        "walletUrl": "https://wallet.testnet.near.org",
+        "helperUrl": "https://helper.testnet.near.org",
+        "explorerUrl": "https://explorer.testnet.near.org"
+    },
+    "near": {
+        "nativeCurrency": {
+            "name": "Near",
+            "decimals": 24,
+            "symbol": "Near"
+        },
+        "iconUrls": [
+            "near.svg"
+        ],
+        "chainName": "Near",
+
+        "net": "MAIN",
+        "networkId": "mainnet",
+        "nodeUrl": "https://rpc.mainnet.near.org",
+        "walletUrl": "https://wallet.mainnet.near.org",
+        "helperUrl": "https://helper.mainnet.near.org",
+        "explorerUrl": "https://explorer.mainnet.near.org"
     }
 }

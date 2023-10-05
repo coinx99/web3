@@ -1,15 +1,22 @@
-import _chains from "./src/CHAINS.json";
-import { connectChain, CHAINS, CHAIN } from "./src/Web3";
+import { Provider } from "ethers";
+import CHAINS from "./src/CHAINS.json";
+import { connectChain, CHAIN } from "./src/Web3";
 
-const { log, warn, error } = console
+const { log, warn, error } = console;
 
-let chains = _chains as unknown as CHAINS;
+var chain = connectChain("ethers", CHAINS[5])
 
-var chain = connectChain("ethers", chains["5"].rpcUrls)
-log(chain)
-
-chain?.getBalance("0x122348D81f32D0e13ee023B07d400Fd6CF81a6bF").then(balance => {
-
-    log(Number(balance) / 1e18)
-
+chain?.events.on("connected", ({ provider, network }) => {
+    chain?.getBalance("0x122348D81f32D0e13ee023B07d400Fd6CF81a6bF").then(balance => {
+        log("balance", Number(balance) / Number(chain?.decimals))
+        // log(chain, CHAINS[chain?.chainId])
+    })
 })
+
+
+// var near = connectChain("near", chains["neartest"])
+// near?.events.on("connected", async provider => {
+//     let balance = await near?.getBalance("coinx.testnet")
+//     let decimals = BigInt(1e24);
+//     log({ balance: balance / decimals })
+// })

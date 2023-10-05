@@ -1,19 +1,36 @@
 
 import Std, { log } from "./Std"
+import { EventEmitter } from "events";
 import { Provider, WebSocketProvider, JsonRpcProvider, getAddress, ethers } from "ethers";
-import Web3, { Wallet } from "./Web3.js";
+import Web3, { CHAIN, Net, Wallet } from "./Web3";
 
 class Web3Ethers implements Web3 {
 
+    /**
+     * all events of class
+     * ("connected", provider)
+     */
+    events: EventEmitter
     provider: Provider;
 
-    constructor(rpcUrls: string | string[]) {
+    chainId: string
+    name: string = "Ethereum"
+    decimals: BigInt = BigInt(1e18)
+    symbol: string = "ETH"
+    net?: Net
+
+    constructor(params: CHAIN | string) {
         let url;
-        if (typeof (rpcUrls) === "string")
-            url = rpcUrls
-        else
-            url = rpcUrls[0];
-        log(url, typeof url)
+        if (typeof (params) === "string")
+            url = params
+        else {
+            url = params.rpcUrls[0];
+            let { symbol, name, decimals } = params?.nativeCurrency
+            this.symbol = symbol;
+            this.name = name;
+            this.decimals = BigInt(10 ** decimals);
+            this.net
+        }
 
         if (Std.isUrl(url)) {
             if (url.startsWith("ws")) {
@@ -21,6 +38,12 @@ class Web3Ethers implements Web3 {
             } else {
                 this.provider = new JsonRpcProvider(url);
             }
+            this.events = new EventEmitter()
+            this.provider.getNetwork().then(network => {
+                this.chainId = network?.chainId.toString()
+                this.events.emit("connected", { provider: this.provider, network })
+
+            })
         } else {
             throw new Error("NOT_URL");
         }

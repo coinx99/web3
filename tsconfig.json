@@ -20,7 +20,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/index.ts", "src/Web3.ts", "src/Web3Ethers.ts", "src/Web3Near.ts", "src/Std.ts"  ],
   "ts-node": {
     "transpileOnly": true,
   },

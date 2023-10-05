@@ -5,7 +5,9 @@
  * - chuyển tiền từ ví này sang ví kia
  * - Khởi tạo thực thể Contract
  */
+import { EventEmitter } from "events";
 import Web3Ethers from "./Web3Ethers";
+import Web3Near from "./Web3Near";
 const { log, warn, error } = console
 
 /**
@@ -30,12 +32,24 @@ export interface CHAIN {
     dev?: Net
 }
 
-export type CHAINS = Record<symbol | string, CHAIN>;
+export type CHAINS = Record<string, CHAIN>;
 
 /**
  * Mẫu giao diện Web3 với các hàm mà các kế thừa khác phải có
  */
 class Web3 {
+    /**
+     * all events of class
+     * ("connected", provider)
+     */
+    events: EventEmitter
+    provider: any
+
+    chainId:string
+    name: string
+    decimals: BigInt
+    symbol: string
+    net?: Net
 
     constructor(rpc: string) { }
 
@@ -51,14 +65,14 @@ class Web3 {
  * @param chainId 
  * @param rpcUrls 
  */
-export function connectChain(evm: "ethers" | "tron" | "near" | "solana", rpcUrls?: string | string[]) {
-    switch (evm) {
+export function connectChain(vm: "ethers" | "tron" | "near" | "solana", params?: CHAIN | string) {
+    switch (vm) {
         case "tron":
 
             break;
 
         case "near":
-
+            return new Web3Near(params)
             break;
 
         case "solana":
@@ -66,7 +80,7 @@ export function connectChain(evm: "ethers" | "tron" | "near" | "solana", rpcUrls
             break;
 
         default:
-            return new Web3Ethers(rpcUrls)
+            return new Web3Ethers(params)
             break;
     }
 }
