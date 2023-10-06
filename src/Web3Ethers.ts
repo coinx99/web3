@@ -1,10 +1,10 @@
 
-import Std, { log } from "./Std"
+import Std, { log } from "./std"
 import { EventEmitter } from "events";
-import { Provider, WebSocketProvider, JsonRpcProvider, getAddress, ethers } from "ethers";
-import Web3, { CHAIN, Net, Wallet } from "./Web3";
+import { Provider, WebSocketProvider, JsonRpcProvider, getAddress, ethers, Wallet, } from "ethers";
+import Web3, { ICHAIN, Net, Contract, } from "./web3";
 
-class Web3Ethers implements Web3 {
+export default class Web3Ethers extends Web3 {
 
     /**
      * all events of class
@@ -19,7 +19,9 @@ class Web3Ethers implements Web3 {
     symbol: string = "ETH"
     net?: Net
 
-    constructor(params: CHAIN | string) {
+
+    constructor(params: ICHAIN | string) {
+        super(params);
         let url;
         if (typeof (params) === "string")
             url = params
@@ -28,8 +30,8 @@ class Web3Ethers implements Web3 {
             let { symbol, name, decimals } = params?.nativeCurrency
             this.symbol = symbol;
             this.name = name;
-            this.decimals = BigInt(10 ** decimals);
-            this.net
+            this.decimals = BigInt(10 ** Number(decimals));
+            this.net = params?.dev
         }
 
         if (Std.isUrl(url)) {
@@ -47,6 +49,10 @@ class Web3Ethers implements Web3 {
         } else {
             throw new Error("NOT_URL");
         }
+    }
+
+    isAddress(address: string) {
+        throw new Error("Method not implemented.");
     }
 
     /**
@@ -69,9 +75,81 @@ class Web3Ethers implements Web3 {
         return this.provider.getBalance(address);
     }
 
-    send(walletFrom: Wallet, walletTo: Wallet, amount: BigInt) { }
+    connectContract(address: string, abi: any): Contract {
+        return new ContractEthers(address, abi, this);
+    }
+
 }
 
+export class ContractEthers extends Contract {
+    instance: any;
+    target: string;
+    interface: any;
+    runner: any;
+    filters: Record<string, any[]>;
+    fallback: any;
 
+    constructor(address: string, abi: any, web3?: Web3) {
+        super();
+    }
 
-export default Web3Ethers;
+    connect(runner: any): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    attach(target: string): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    getAddress(): Promise<string> {
+        throw new Error("Method not implemented.");
+    }
+    getDeployedCode(): Promise<string> {
+        throw new Error("Method not implemented.");
+    }
+    waitForDeployment(): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    deploymentTransaction() {
+        throw new Error("Method not implemented.");
+    }
+    getFunction<T>(key: string): T {
+        throw new Error("Method not implemented.");
+    }
+    getEvent(key: string): any[] {
+        throw new Error("Method not implemented.");
+    }
+    queryTransaction(hash: string): Promise<any[]> {
+        throw new Error("Method not implemented.");
+    }
+    queryFilter(event: any, fromBlock?: any, toBlock?: any): Promise<any[]> {
+        throw new Error("Method not implemented.");
+    }
+    on(event: any, listener: EventListener): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    once(event: any, listener: EventListener): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    emit(event: any, ...args: any[]): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
+    listenerCount(event?: any): Promise<number> {
+        throw new Error("Method not implemented.");
+    }
+    listeners(event?: any): Promise<EventListener[]> {
+        throw new Error("Method not implemented.");
+    }
+    off(event: any, listener?: EventListener): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    removeAllListeners(event?: any): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    addListener(event: any, listener: EventListener): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+    removeListener(event: any, listener: EventListener): Promise<this> {
+        throw new Error("Method not implemented.");
+    }
+}
+
+export type WalletEthers = Wallet;

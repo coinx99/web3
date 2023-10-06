@@ -1,8 +1,8 @@
 
-import Std, { log } from "./Std"
+import Std, { log } from "./std"
 import { EventEmitter } from "events";
 import { connect, Near, keyStores, ConnectConfig, } from "near-api-js";
-import Web3, { Net, Wallet } from "./Web3";
+import Web3, { Net, Wallet } from "./web3";
 
 class Web3Near implements Web3 {
 
