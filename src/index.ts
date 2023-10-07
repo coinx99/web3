@@ -3,7 +3,6 @@ import Web3Ethers from "./web3Ethers"
 import Web3Near from "./web3Near";
 
 export { Web3Ethers, Web3 };
-
 /**
  * 
  * @param chainId 

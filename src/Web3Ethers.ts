@@ -1,7 +1,7 @@
 
 import Std, { log } from "./std"
 import { EventEmitter } from "events";
-import { Provider, WebSocketProvider, JsonRpcProvider, getAddress, ethers, Wallet, } from "ethers";
+import { WebSocketProvider, JsonRpcProvider, getAddress, ethers, Wallet, Provider, Contract as _Contract } from "ethers";
 import Web3, { ICHAIN, Net, Contract, } from "./web3";
 
 export default class Web3Ethers extends Web3 {
@@ -18,7 +18,6 @@ export default class Web3Ethers extends Web3 {
     decimals: BigInt = BigInt(1e18)
     symbol: string = "ETH"
     net?: Net
-
 
     constructor(params: ICHAIN | string) {
         super(params);
@@ -50,6 +49,8 @@ export default class Web3Ethers extends Web3 {
             throw new Error("NOT_URL");
         }
     }
+
+
 
     isAddress(address: string) {
         throw new Error("Method not implemented.");
@@ -87,68 +88,20 @@ export class ContractEthers extends Contract {
     interface: any;
     runner: any;
     filters: Record<string, any[]>;
-    fallback: any;
+
+    call: any;
 
     constructor(address: string, abi: any, web3?: Web3) {
         super();
-    }
+        if (!web3 || !(web3 instanceof Web3)) {
+            throw new Error("web3 not connected yet");
+        }
+        let instance = new _Contract(address, abi, web3.provider)
+        this.instance = instance;
+        abi.forEach((element: any) => {
+            if ((element.stateMutability === "view" || "pure") && (element.name === undefined)) log(element)
 
-    connect(runner: any): Promise<this> {
-        throw new Error("Method not implemented.");
-    }
-    attach(target: string): Promise<this> {
-        throw new Error("Method not implemented.");
-    }
-    getAddress(): Promise<string> {
-        throw new Error("Method not implemented.");
-    }
-    getDeployedCode(): Promise<string> {
-        throw new Error("Method not implemented.");
-    }
-    waitForDeployment(): Promise<this> {
-        throw new Error("Method not implemented.");
-    }
-    deploymentTransaction() {
-        throw new Error("Method not implemented.");
-    }
-    getFunction<T>(key: string): T {
-        throw new Error("Method not implemented.");
-    }
-    getEvent(key: string): any[] {
-        throw new Error("Method not implemented.");
-    }
-    queryTransaction(hash: string): Promise<any[]> {
-        throw new Error("Method not implemented.");
-    }
-    queryFilter(event: any, fromBlock?: any, toBlock?: any): Promise<any[]> {
-        throw new Error("Method not implemented.");
-    }
-    on(event: any, listener: EventListener): Promise<this> {
-        throw new Error("Method not implemented.");
-    }
-    once(event: any, listener: EventListener): Promise<this> {
-        throw new Error("Method not implemented.");
-    }
-    emit(event: any, ...args: any[]): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
-    listenerCount(event?: any): Promise<number> {
-        throw new Error("Method not implemented.");
-    }
-    listeners(event?: any): Promise<EventListener[]> {
-        throw new Error("Method not implemented.");
-    }
-    off(event: any, listener?: EventListener): Promise<this> {
-        throw new Error("Method not implemented.");
-    }
-    removeAllListeners(event?: any): Promise<this> {
-        throw new Error("Method not implemented.");
-    }
-    addListener(event: any, listener: EventListener): Promise<this> {
-        throw new Error("Method not implemented.");
-    }
-    removeListener(event: any, listener: EventListener): Promise<this> {
-        throw new Error("Method not implemented.");
+        });
     }
 }
 

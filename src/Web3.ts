@@ -80,7 +80,6 @@ export interface IContract {
     interface: any;
     runner: any;
     filters: Record<string, any[]>;
-    fallback: any;
 
     connect(runner: any): Promise<this>;
 
@@ -121,13 +120,13 @@ export interface IContract {
     removeListener(event: any, listener: EventListener): Promise<this>
 }
 
-export class Contract implements IContract {
+export class Contract extends EventEmitter implements IContract {
     instance: any;
     target: string;
     interface: any;
     runner: any;
     filters: Record<string, any[]>;
-    fallback: any;
+
     connect(runner: any): Promise<this> {
         throw new Error("Method not implemented.");
     }
