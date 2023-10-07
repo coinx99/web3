@@ -2,9 +2,9 @@
 import Std, { log } from "./std"
 import { EventEmitter } from "events";
 import { connect, Near, keyStores, ConnectConfig, } from "near-api-js";
-import Web3, { Net, Wallet } from "./web3";
+import Web3, { Net, IWallet as Wallet } from "./web3";
 
-class Web3Near implements Web3 {
+class Web3Near extends Web3 {
 
     /**
      * all events of class
@@ -19,6 +19,7 @@ class Web3Near implements Web3 {
     net?: Net
 
     constructor(config?: any | string) {
+        super(config);
         let connectionConfig: any;
         if (!config) {
             connectionConfig = {
