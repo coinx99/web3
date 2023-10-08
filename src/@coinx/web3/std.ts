@@ -13,5 +13,3 @@ class Std {
 }
 
 export default Std;
-
-// dsfsdfd
