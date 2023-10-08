@@ -8,10 +8,10 @@ export { Web3Ethers, Web3, Wallet };
  * @param chainId 
  * @param rpcUrls 
  */
-export function connectChain(vm: VM, params: ICHAIN | string) {
+export function connectChain(vm: VM, params: ICHAIN | string): Web3 {
     switch (vm) {
         case "tron":
-
+            return new Web3(params)
             break;
 
         case "near":
@@ -19,12 +19,11 @@ export function connectChain(vm: VM, params: ICHAIN | string) {
             break;
 
         case "solana":
-
+            return new Web3(params)
             break;
 
         default:
             return new Web3Ethers(params)
-            break;
     }
 }
 

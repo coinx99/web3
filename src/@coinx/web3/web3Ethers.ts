@@ -12,7 +12,6 @@ export default class Web3Ethers extends Web3 {
      * all events of class
      * ("connected", provider)
      */
-    events: EventEmitter
     provider: Provider;
 
     chainId!: string
@@ -41,10 +40,9 @@ export default class Web3Ethers extends Web3 {
             } else {
                 this.provider = new JsonRpcProvider(url);
             }
-            this.events = new EventEmitter()
             this.provider.getNetwork().then((network: any) => {
                 this.chainId = network?.chainId.toString()
-                this.events.emit("connected", { provider: this.provider, network })
+                this.emit("connected", { provider: this.provider, network })
 
             })
         } else {
@@ -86,19 +84,30 @@ export default class Web3Ethers extends Web3 {
 
 export class WalletEthers extends Wallet {
     wallet: _Wallet
-    address: string;
+
     constructor(privateKey: string) {
         super();
 
         this.wallet = new _Wallet(privateKey);
         this.address = this.wallet.address
     }
+
+    connect(web3: Web3): Wallet {
+        this.provider = web3;
+        return this;
+    }
+
     get privateKey(): string {
         return this.wallet.privateKey;
     }
 
     getAddress(): string {
         return this.address
+    }
+
+    async getBalance(): Promise<BigInt> {
+        this.balance = await this.provider.getBalance(this.address);
+        return this.balance;
     }
 }
 
@@ -142,26 +151,52 @@ export function definePropertiess<T>(
 }
 
 export const TypeSolidityToJs = {
-    uint8: BigInt,
-    uint16: BigInt,
-    uint32: BigInt,
-    uint64: BigInt,
-    uint128: BigInt,
-    uint256: BigInt,
-    int8: Number,
-    int16: Number,
-    int32: Number,
-    int64: Number,
-    int128: Number,
-    int256: Number,
-    bool: Boolean,
-    address: String, // Địa chỉ Ethereum có thể ánh xạ sang kiểu chuỗi
-    string: String,
-    bytes32: String,
+    uint8: BigInt(1),
+    uint16: BigInt(1),
+    uint32: BigInt(1),
+    uint64: BigInt(1),
+    uint128: BigInt(1),
+    uint256: BigInt(1),
+    int8: Number(-1),
+    int16: Number(-1),
+    int32: Number(-1),
+    int64: Number(-1),
+    int128: Number(-1),
+    int256: Number(-1),
+    bool: true,
+    address: "string", // Địa chỉ Ethereum có thể ánh xạ sang kiểu chuỗi
+    string: "string",
+    bytes32: "string",
     bytes: Uint8Array, // Mảng bytes trong JavaScript
 
     event: EventEmitter
 }
+
+type Getters<Type> = {
+    [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]
+};
+
+interface Person {
+    name: string;
+    age: number;
+    location: string;
+}
+
+type LazyPerson = Getters<Person>;
+
+let l: LazyPerson ={
+    getName: function (): string {
+        throw new Error("Function not implemented.");
+    },
+    getAge: function (): number {
+        throw new Error("Function not implemented.");
+    },
+    getLocation: function (): string {
+        throw new Error("Function not implemented.");
+    }
+} ;
+
+console.log(l)
 
 export class ContractEthers extends Contract {
     instance: any;
@@ -180,16 +215,22 @@ export class ContractEthers extends Contract {
         }
         let instance = new _Contract(address, abi, web3.provider)
         this.instance = instance;
+        log(abi)
         abi.forEach((v: any) => {
+            v.inputs.forEach((input: any) => {
+                log(TypeSolidityToJs[input.type])
+            })
             if (v.type === 'function') {
-                log(v.name);
                 this.addProperty(<IFace>v)
             }
         })
     }
 
+    whatType(typename: string): any {
+
+    }
+
     addProperty(face: IFace): void {
-        log(face)
     }
 
     generateFuntions(abi: IFace[]) {

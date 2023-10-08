@@ -68,14 +68,16 @@ export interface IWallet {
     resolveName(name: string): Promise<string>
 
     sendTransaction(tx: any): Promise<any>
+
+    getBalance(): Promise<BigInt>;
 }
 
-export class Wallet implements IWallet {
+export class Wallet extends EventEmitter implements IWallet {
     provider!: Web3;
-    readonly address!: string;
+    address!: string;
     [index: string]: any;
 
-    connect(provider: Web3): IWallet {
+    connect(provider: Web3): Wallet {
         throw new Error("Method not implemented.");
     }
     encrypt(password: string | Uint8Array, progressCallback?: void | undefined): Promise<string> {
@@ -124,6 +126,10 @@ export class Wallet implements IWallet {
         throw new Error("Method not implemented.");
     }
     sendTransaction(tx: any): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
+
+    async getBalance(): Promise<BigInt> {
         throw new Error("Method not implemented.");
     }
 }
@@ -218,7 +224,6 @@ export interface IWeb3 {
      * all events of class
      * ("connected", provider)
      */
-    events: EventEmitter
     provider: any
 
     chainId: string
@@ -233,11 +238,10 @@ export interface IWeb3 {
 
     getBalance(address: string): Promise<BigInt>;
 
-    connectContract(address: string, abi: any): IContract;
+    connectContract(address: string, abi: any): Contract;
 }
 
-export default class Web3 implements IWeb3 {
-    events!: EventEmitter;
+export default class Web3 extends EventEmitter implements IWeb3 {
     provider!: any;
     chainId!: string;
     name!: string;
@@ -245,7 +249,9 @@ export default class Web3 implements IWeb3 {
     symbol!: string;
     net?: Net;
 
-    constructor(params: ICHAIN | string) { }
+    constructor(params: ICHAIN | string) {
+        super();
+    }
 
     ["constructor"](params: string | ICHAIN): this {
         throw new Error("Method not implemented.");
@@ -256,7 +262,7 @@ export default class Web3 implements IWeb3 {
     getBalance(address: string): Promise<BigInt> {
         throw new Error("Method not implemented.");
     }
-    connectContract(address: string, abi: any): IContract {
+    connectContract(address: string, abi: any): Contract {
         throw new Error("Method not implemented.");
     }
 }
