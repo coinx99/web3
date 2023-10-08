@@ -26,15 +26,15 @@ class App extends React.Component {
   componentDidMount(): void {
     let { tokenaddress, } = this.state
 
-    let myWallet = connectWallet("ethers", "0xe81e12929f5dd44c5563efb8beb9adda67a11ffad44fdd74c53f13524651f91a")
-    this.setState({ myWallet })
 
     var chain = connectChain("ethers", CHAINS[5])
 
     chain?.events?.on("connected", ({ provider, network }) => {
-      let { myWallet, } = this.state
+      let myWallet = connectWallet("ethers", "0xe81e12929f5dd44c5563efb8beb9adda67a11ffad44fdd74c53f13524651f91a")
+
       if (myWallet?.address)
         chain?.getBalance(myWallet?.address).then(balance => {
+          myWallet["balance"] = Number(balance).toString()
           this.setState({ myWallet, balance, chain })
         })
 
@@ -47,7 +47,7 @@ class App extends React.Component {
   render(): React.ReactNode {
     let { chain, myWallet, tokenaddress, balance, } = this.state
 
-    let _balance = chain ? (Number(balance) / Number(chain?.decimals)).toString() + chain?.symbol : balance?.toString() + " wei";
+    let _balance = chain ? (Number(myWallet?.balance) / Number(chain?.decimals)).toString() + chain?.symbol : myWallet?.balance?.toString() + " wei";
 
     return (<ConfigProvider theme={{ algorithm: theme.darkAlgorithm, }}>
 
@@ -60,6 +60,7 @@ class App extends React.Component {
             <Content>
               <Row>
                 <Col>my address {myWallet?.getAddress()}: {_balance} </Col>
+                <Col>d</Col>
               </Row>
 
             </Content>

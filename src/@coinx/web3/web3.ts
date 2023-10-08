@@ -73,6 +73,7 @@ export interface IWallet {
 export class Wallet implements IWallet {
     provider!: Web3;
     readonly address!: string;
+    [index: string]: any;
 
     connect(provider: Web3): IWallet {
         throw new Error("Method not implemented.");
